@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Productos";
+}
+
+<div class="row">
+    <div class="col-sm"></div>
+    <div class="col-sm">
+        <h2 class="text-center">Productos</h2>
+        <table class="table table-striped" id="tb-products">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-sm"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        axios.get('/api/v1/product')
+            .then(function (response) {
+                response.data.forEach(item => {
+                    let columnsHtml = '<tr>';
+                    columnsHtml += `<td>${item.Name}</td>`;
+                    columnsHtml += `<td>${item.Quantity}</td>`;
+                    columnsHtml += `<td>${item.Price}</td>`;
+                    columnsHtml += '</tr>';
+                    $("#tb-products tbody").append(columnsHtml);
+                })
+            })
+            .catch(function (error) {
+                console.log('Ocurrio un error al obtener los productos');
+                console.log(error);
+            });
+    });
+</script>
+
